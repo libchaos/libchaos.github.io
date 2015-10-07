@@ -4,12 +4,14 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Hello World | libchaos Blog</title>
+    <title>阻塞与非阻塞IO | libchaos Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="libhaos">
     
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in ">
+    <meta name="description" content="阻塞与非阻塞IO
+Node中，你需要对回调函数如何修改当前内存中的变量(状态)特别小心。
+1234567var books = [&quot;红楼梦&quot;, &quot;三国演义&quot;];function serveBooks()&amp;#123;  //给客户端返回的HTML代码  var html = &#39;&amp;lt;b&amp;gt;&#39; +">
     
     
     
@@ -65,15 +67,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/09/15/hello-world/" title="Hello World" itemprop="url">Hello World</a>
+      <a href="/2015/09/25/阻塞与非阻塞IO/" title="阻塞与非阻塞IO" itemprop="url">阻塞与非阻塞IO</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="libhaos">libhaos</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-09-15T11:48:52.000Z" itemprop="datePublished">2015-09-15</time>
-    更新日期:<time datetime="2015-09-15T11:48:52.000Z" itemprop="dateModified">2015-09-15</time>
+    <time datetime="2015-09-25T10:38:43.000Z" itemprop="datePublished">2015-09-25</time>
+    更新日期:<time datetime="2015-09-26T05:58:26.000Z" itemprop="dateModified">2015-09-26</time>
     
   </p>
 </header>
@@ -82,28 +84,36 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#阻塞与非阻塞IO"><span class="toc-number">1.</span> <span class="toc-text">阻塞与非阻塞IO</span></a></li></ol>
 		</div>
 		
-		<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+		<h1 id="阻塞与非阻塞IO">阻塞与非阻塞IO</h1><hr>
+<p>Node中，你需要对回调函数如何修改当前内存中的变量(状态)特别小心。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> books = [<span class="string">"红楼梦"</span>, <span class="string">"三国演义"</span>];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">serveBooks</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//给客户端返回的HTML代码</span></span><br><span class="line">  <span class="keyword">var</span> html = <span class="string">'&lt;b&gt;'</span> + books.join(<span class="string">'&lt;/b&gt;&lt;br&gt;&lt;b&gt;'</span>)+<span class="string">'&lt;/b&gt;'</span>;</span><br><span class="line">  books = [];</span><br><span class="line">  <span class="keyword">return</span> html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>等价的PHP代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$books</span> = <span class="keyword">array</span>(<span class="string">'harry'</span>, <span class="string">'dollars'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">serveBooks</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="variable">$html</span> = <span class="string">'&lt;b&gt;'</span>.join(<span class="variable">$books</span>, <span class="string">'&lt;/b&gt;&lt;br&gt;&lt;b&gt;'</span>).<span class="string">'&lt;/b&gt;'</span>;</span><br><span class="line">  <span class="variable">$books</span> = <span class="keyword">array</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="variable">$html</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>APACHE
+</code></pre><p>PHP         PHP<br>THREAD      THREAD</p>
+<p>REQUEST     REQUEST</p>
+<p>NODE.JS<br>THREAD</p>
+<p>REQUEST REQUEST REQUEST</p>
+<p>node.js只有借助child_process 才能生成新的process</p>
+<p>采用事件轮询意味 甚么 呢？<br>  Node会先注册事件， 随后，不停的询问内核，这些事情是否已经分发</p>
   
 	</div>
 		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/阻塞-非阻塞-IO/">阻塞 非阻塞 IO</a>
+  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/09/15/hello-world/" data-title="Hello World | libchaos Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/09/25/阻塞与非阻塞IO/" data-title="阻塞与非阻塞IO | libchaos Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -113,13 +123,21 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/09/15/算法导论-1/" title="算法导论-1">
+ <a href="/2015/09/25/python算法/" title="python算法">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  算法导论-1</span>
+  python算法</span>
 </a>
 </div>
 
+
+<div class="next">
+<a href="/2015/09/24/了不起的node.js学习笔记/"  title="">
+ <strong>NEXT:</strong><br/> 
+ <span>(no title)
+</span>
+</a>
+</div>
 
 </nav>
 
@@ -129,7 +147,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#阻塞与非阻塞IO"><span class="toc-number">1.</span> <span class="toc-text">阻塞与非阻塞IO</span></a></li></ol>
   </div>
 
 <div id="asidepart">
