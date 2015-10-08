@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>libchaos Blog</title>
+    <title>了不起的node.js学习笔记 | libchaos Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="libhaos">
@@ -71,15 +71,15 @@ Javascript基础
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/09/24/了不起的node.js学习笔记/" title="" itemprop="url"></a>
+      <a href="/2015/09/24/了不起的node.js学习笔记/" title="了不起的node.js学习笔记" itemprop="url">了不起的node.js学习笔记</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="libhaos">libhaos</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-09-24T06:49:48.000Z" itemprop="datePublished">2015-09-24</time>
-    更新日期:<time datetime="2015-09-24T06:49:48.000Z" itemprop="dateModified">2015-09-24</time>
+    <time datetime="2015-09-24T02:21:17.000Z" itemprop="datePublished">2015-09-24</time>
+    更新日期:<time datetime="2015-10-08T02:39:56.000Z" itemprop="dateModified">2015-10-08</time>
     
   </p>
 </header>
@@ -118,7 +118,12 @@ Javascript基础
 <p>调用以下函数时，使用.call 和.apply 方法可以改变this值：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.a == <span class="string">'b'</span>; <span class="comment">// true</span></span><br><span class="line">&#125;</span><br><span class="line">a.call(&#123;a: <span class="string">'b'</span>&#125;);</span><br></pre></td></tr></table></figure></p>
 <p>call 和 apply 区别在于 call 接受参数列表， 而apply接受一个参数数组<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params">b, c</span>)</span>&#123;</span><br><span class="line">  b == <span class="string">'first'</span>; <span class="comment">//true;</span></span><br><span class="line">  c == <span class="string">'second'</span>; <span class="comment">//true</span></span><br><span class="line">&#125;;</span><br><span class="line">a.call(&#123;a: <span class="string">'b'</span>&#125;, <span class="string">'first'</span>, <span class="string">'second'</span>);</span><br><span class="line">a.apply(&#123;a: <span class="string">'b'</span>&#125;, [<span class="string">'first'</span>, <span class="string">'second'</span>]);</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>函数的参数数量<br>函数有一个很有意思的属性—参数数量， 该属性指明函数声明时可接受的参数数量。在javascript中，该属性名叫length。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">var</span> a = <span class="function"><span class="keyword">function</span>(<span class="params">a, b, c</span>);</span><br><span class="line">  <span class="title">a</span>.<span class="title">length</span> == 3; //<span class="title">true</span></span><br><span class="line">```  </span><br><span class="line">尽管者在浏览器端很少使用， 但是， 他对我们非常重要， 因为一些流行的<span class="title">node</span>框架通过此属性来根据不同的参数个数提供不同功能的。</span><br><span class="line"></span><br><span class="line">- 闭包</span><br><span class="line">在<span class="title">javascript</span>中， 每次函数调用时， 新的作用域就会产生。</span><br><span class="line">在某个作用域中定义的变量只能在该作用域或其内部的作用域（该作用域中定义的作用域）中才能访问到：</span><br><span class="line">```<span class="title">javascript</span></span><br><span class="line"><span class="title">var</span> <span class="title">a</span> = 5;</span><br><span class="line"><span class="title">function</span> <span class="title">woot</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  a == <span class="number">5</span>; <span class="comment">//false;</span></span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">6</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    a == <span class="number">6</span>; <span class="comment">//true</span></span><br><span class="line">  &#125;;</span><br><span class="line">  test();</span><br><span class="line">&#125;;</span><br><span class="line">woot();</span><br></pre></td></tr></table></figure>
+<li>函数的参数数量<br>函数有一个很有意思的属性—参数数量， 该属性指明函数声明时可接受的参数数量。在javascript中，该属性名叫length。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="function"><span class="keyword">function</span>(<span class="params">a, b, c</span>);</span><br><span class="line"><span class="title">a</span>.<span class="title">length</span> == 3; //<span class="title">true</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>尽管者在浏览器端很少使用， 但是， 他对我们非常重要， 因为一些流行的node框架通过此属性来根据不同的参数个数提供不同功能的。</p>
+<ul>
+<li>闭包<br>在javascript中， 每次函数调用时， 新的作用域就会产生。<br>在某个作用域中定义的变量只能在该作用域或其内部的作用域（该作用域中定义的作用域）中才能访问到：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">5</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">woot</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  a == <span class="number">5</span>; <span class="comment">//false;</span></span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">6</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    a == <span class="number">6</span>; <span class="comment">//true</span></span><br><span class="line">  &#125;;</span><br><span class="line">  test();</span><br><span class="line">&#125;;</span><br><span class="line">woot();</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>自执行函数是一种机制， 通过者中机制声明和调用一个匿名函数， 能够达到仅定义一个新作用域的作用。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">var</span> a = <span class="number">5</span>;&#125;)();</span><br><span class="line">a == <span class="number">3</span>; <span class="comment">//true;</span></span><br></pre></td></tr></table></figure></p>
@@ -197,7 +202,7 @@ Javascript基础
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/09/24/了不起的node.js学习笔记/" data-title="libchaos Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/09/24/了不起的node.js学习笔记/" data-title="了不起的node.js学习笔记 | libchaos Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -216,9 +221,9 @@ Javascript基础
 
 
 <div class="next">
-<a href="/2015/09/24/了不起的node-js学习笔记/"  title="了不起的node.js学习笔记">
+<a href="/2015/09/15/算法导论-1/"  title="算法导论-1">
  <strong>NEXT:</strong><br/> 
- <span>了不起的node.js学习笔记
+ <span>算法导论-1
 </span>
 </a>
 </div>

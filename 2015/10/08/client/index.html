@@ -9,12 +9,14 @@
     
     <meta name="author" content="libhaos">
     
-    <meta name="description" content="var net = require(&#39;net&#39;);
-var count = 0;
-//状态以及记录连接情况
-//为了能偶向其他连接进来的客户端发送和广播消息，我们需要对该状态进行拓展，来追纵到底谁进来啦
-//首先我们要记录设置了昵称的用户，为此要引入新的状态变量，users
-var users = ">
+    <meta name="description" content="require(&#39;http&#39;).request({
+    host: &#39;127.0.0.1&#39;,
+    port: 3000,
+    url: &#39;/&#39;,
+    method: &#39;GET&#39;,
+}, function(res){
+    var body = &#39;&#39;;
+    res.setEnco">
     
     
     
@@ -70,15 +72,15 @@ var users = ">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/10/07/index/" title="" itemprop="url"></a>
+      <a href="/2015/10/08/client/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="libhaos">libhaos</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-10-07T07:51:42.000Z" itemprop="datePublished">2015-10-07</time>
-    更新日期:<time datetime="2015-10-07T07:51:42.000Z" itemprop="dateModified">2015-10-07</time>
+    <time datetime="2015-10-08T02:46:57.000Z" itemprop="datePublished">2015-10-08</time>
+    更新日期:<time datetime="2015-10-08T02:46:57.000Z" itemprop="dateModified">2015-10-08</time>
     
   </p>
 </header>
@@ -90,71 +92,21 @@ var users = ">
 		
 		</div>
 		
-		var net = require('net');
-var count = 0;
-//状态以及记录连接情况
-//为了能偶向其他连接进来的客户端发送和广播消息，我们需要对该状态进行拓展，来追纵到底谁进来啦
-//首先我们要记录设置了昵称的用户，为此要引入新的状态变量，users
-var users = {};
-// //然后在每个连接中，在引入一个nickname的变量。
-// var nickname;
-//createServer
-var server = net.createServer(function(conn){
-  var nickname;
-  //handle connection
-  console.log('\033[90m new Connections!\033[39m');
-  conn.write(
-    '\n> welcome to \033[92m node-chat\033[39m!'
-    + '\n> ' + count + ' other people are connected at this time.'
-    + '\n> please write your name and press enter: '
-  );
-
-  count++;
-  function broadcast(msg, exceptMyself){
-    for(var i in users){
-      if (!exceptMyself || i != nickname){
-        users[i].write(msg); 
-      }
-    }
-  }
-  conn.on('data', function(data){
-    //console.log(data);
-    //接收数据是，确保将回车键清除
-    data = data.replace('\r\n', '')
-    if(!nickname){
-      if(users[data]){
-        conn.write('\033[93m> nickname already in use.try again: \033[39m ');
-        return;
-      }else{
-        nickname = data;
-        users[nickname] = conn;
-
-        for (var i in users){
-            users[i].write('\033[90m > ' + nickname + ' joined  the room \033[39m \n');
-        }
-      }
-    }else{
-      //否则视为聊天消息，发给除自己意外的所有客户端。
-      for(var i in users){
-        if( i!= nickname){
-          users[i].write('\033[96m >' + nickname + ':\033]39m ' + data + '\n' );
-        }
-      }
-    }
-  });
-
-  conn.setEncoding('utf8');
-
-  conn.on('close', function(){
-    count--;
-    console.log('One Connection quit!!')
-    delete users[nickname];
-  });
-});
-//listen
-server.listen(3000, function(){
-  console.log('\033[96m server listening on *:3000\033[39m');
-});
+		require('http').request({
+    host: '127.0.0.1',
+    port: 3000,
+    url: '/',
+    method: 'GET',
+}, function(res){
+    var body = '';
+    res.setEncoding('utf8');
+    res.on('data', function(chunk){
+        body += chunk;
+    });
+    res.on('end', function(){
+        console.log('\n We got: \033[96m' + body + '\033[38m\n');
+    });
+}).end();
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -164,7 +116,7 @@ server.listen(3000, function(){
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/10/07/index/" data-title="libchaos Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/10/08/client/" data-title="libchaos Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -175,9 +127,9 @@ server.listen(3000, function(){
  
 
 <div class="next">
-<a href="/2015/10/07/TCP/"  title="TCP">
+<a href="/2015/10/08/index/"  title="">
  <strong>NEXT:</strong><br/> 
- <span>TCP
+ <span>(no title)
 </span>
 </a>
 </div>
