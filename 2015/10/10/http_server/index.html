@@ -9,14 +9,13 @@
     
     <meta name="author" content="libhaos">
     
-    <meta name="description" content="require(&#39;http&#39;).request({
-    host: &#39;127.0.0.1&#39;,
-    port: 3000,
-    url: &#39;/&#39;,
-    method: &#39;GET&#39;,
-}, function(res){
-    var body = &#39;&#39;;
-    res.setEnco">
+    <meta name="description" content="var http = require(&#39;http&#39;);
+
+var fs = require(&#39;fs&#39;);
+
+
+var server = http.createServer(function(req, res){
+    if(&#39;GET&#39; == req.method &amp;&amp; &#39;/images&#39; == r">
     
     
     
@@ -72,15 +71,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/10/08/client/" title="" itemprop="url"></a>
+      <a href="/2015/10/10/http_server/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="libhaos">libhaos</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-10-08T14:00:07.000Z" itemprop="datePublished">2015-10-08</time>
-    更新日期:<time datetime="2015-10-08T14:00:07.000Z" itemprop="dateModified">2015-10-08</time>
+    <time datetime="2015-10-10T10:36:42.000Z" itemprop="datePublished">2015-10-10</time>
+    更新日期:<time datetime="2015-10-10T10:36:42.000Z" itemprop="dateModified">2015-10-10</time>
     
   </p>
 </header>
@@ -92,44 +91,36 @@
 		
 		</div>
 		
-		require('http').request({
-    host: '127.0.0.1',
-    port: 3000,
-    url: '/',
-    method: 'GET',
-}, function(res){
-    var body = '';
-    res.setEncoding('utf8');
-    res.on('data', function(chunk){
-        body += chunk;
-    });
-    res.on('end', function(){
-        console.log('\n We got: \033[96m' + body + '\033[38m\n');
-    });
-}).end();
+		var http = require('http');
+
+var fs = require('fs');
 
 
-function zhengti(argument){
+var server = http.createServer(function(req, res){
+    if('GET' == req.method && '/images' == req.url.substr(0, 7) && '.jpg' == req.url.substr(-4)){
+        fs.stat(__dirname + req.url, function(err, stat){
+            if(err || !stat.isFile()){
+                res.writeHead(404);
+                res.end('not found');
+                return;
+            }
+            serve(__dirname + req.url, 'application/jpg');
+        });
 
-};
+    }else if('GET' == req.method && '/' == req.url){
+        serve(__dirname+'/index.html', 'text/html');
+    }else{
+        res.writeHead(404);
+        res.end('not found');
+    }
+    function serve(path, type){
+        res.writeHead(200, {'Content-Type': type});
+        fs.createReadStream(path).pipe(res);
+    }
+})
 
-zhengti.prototype.kaifei = function(){
-    throw new Error('不能直接使用');
-};
-
-zhengti.prototype.mianbao = function(){
-    throw new Error('不能直接使用');
-};
-
-function guke(){
-
-};
-
-guke.prototype.diancan = function(){
-    var t = new zhengti;
-    t.kaifei()；
-
-}
+server.listen(3000);
+console.log('server listening in 3000...');
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -139,7 +130,7 @@ guke.prototype.diancan = function(){
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/10/08/client/" data-title="libchaos Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/10/10/http_server/" data-title="libchaos Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -149,7 +140,7 @@ guke.prototype.diancan = function(){
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/10/10/http_server/" title="">
+ <a href="/2015/10/10/index/" title="">
   <strong>PREVIOUS:</strong><br/>
   <span>
   (no title)</span>
@@ -158,9 +149,9 @@ guke.prototype.diancan = function(){
 
 
 <div class="next">
-<a href="/2015/10/08/简单的web服务器/"  title="简单的web服务器">
+<a href="/2015/10/08/client/"  title="">
  <strong>NEXT:</strong><br/> 
- <span>简单的web服务器
+ <span>(no title)
 </span>
 </a>
 </div>

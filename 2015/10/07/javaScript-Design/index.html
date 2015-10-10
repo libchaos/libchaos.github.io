@@ -79,7 +79,7 @@
     </p>
   <p class="article-time">
     <time datetime="2015-10-07T13:14:59.000Z" itemprop="datePublished">2015-10-07</time>
-    更新日期:<time datetime="2015-10-07T14:32:08.000Z" itemprop="dateModified">2015-10-07</time>
+    更新日期:<time datetime="2015-10-08T10:01:38.000Z" itemprop="dateModified">2015-10-08</time>
     
   </p>
 </header>
@@ -88,7 +88,7 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原型模式"><span class="toc-number">1.</span> <span class="toc-text">原型模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#代码实战"><span class="toc-number">1.1.</span> <span class="toc-text">代码实战</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#装饰者模式"><span class="toc-number">1.2.</span> <span class="toc-text">装饰者模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#组合模式将对象组合成树形结构以表示“部分-整体_”"><span class="toc-number">1.3.</span> <span class="toc-text">组合模式将对象组合成树形结构以表示“部分-整体  ”</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原型模式"><span class="toc-number">1.</span> <span class="toc-text">原型模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#代码实战"><span class="toc-number">1.1.</span> <span class="toc-text">代码实战</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#装饰者模式"><span class="toc-number">1.2.</span> <span class="toc-text">装饰者模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#组合模式"><span class="toc-number">1.3.</span> <span class="toc-text">组合模式</span></a></li></ol></li></ol>
 		</div>
 		
 		<h1 id="原型模式">原型模式</h1><p>文字方式</p>
@@ -102,27 +102,9 @@
 <h2 id="装饰者模式">装饰者模式</h2><p>装饰者用于包装同接口的对象，向方法添加行为，还可以设置为引用。</p>
 <p>装饰着用于通过重载方法的形式添加新功能，该模式可以在被装饰者前面或者后面<br>加上自己行为以达到特定的目的。</p>
 <p>装饰家居<br>    给门上加上花边</p>
-<pre><code>`<span class="javascript"></span>``<span class="javascript">javascript
-    <span class="keyword">var</span> home = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>{
-
-    }
-    home.prototype.space = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>{
-        <span class="built_in">console</span>.log(<span class="string">'我是一个空房子'</span>);
-    },
-
-    <span class="keyword">var</span> zhuangshi = <span class="function"><span class="keyword">function</span>(<span class="params">home</span>)</span>{
-        <span class="keyword">this</span>.zfangzi = home;
-    };
-
-    zhuangshi.prototype.space = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
-        <span class="keyword">this</span>.zfangzi.space();
-        conosole.log(<span class="string">'我添加了一个家居'</span>);
-    }
-    <span class="keyword">var</span> _fangzi = <span class="keyword">new</span> home();
-    <span class="keyword">var</span> _zhuangshi = <span class="keyword">new</span> zhuangshi(_fangzi);
-    _zhuangshi.space();
-    </span>``<span class="javascript"></span>` 
-</code></pre><h2 id="组合模式将对象组合成树形结构以表示“部分-整体_”">组合模式将对象组合成树形结构以表示“部分-整体  ”</h2>  
+<pre><code><span class="comment"><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> home = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">home.prototype.space = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'我是一个空房子'</span>);</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> zhuangshi = <span class="function"><span class="keyword">function</span>(<span class="params">home</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.zfangzi = home;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">zhuangshi.prototype.space = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.zfangzi.space();</span><br><span class="line">    conosole.log(<span class="string">'我添加了一个家居'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> _fangzi = <span class="keyword">new</span> home();</span><br><span class="line"><span class="keyword">var</span> _zhuangshi = <span class="keyword">new</span> zhuangshi(_fangzi);</span><br><span class="line">_zhuangshi.space();</span><br></pre></td></tr></table></figure></span>
+</code></pre><h2 id="组合模式">组合模式</h2><p>  将对象组合成树形结构以表示“部分-整体  ”</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 
@@ -165,7 +147,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原型模式"><span class="toc-number">1.</span> <span class="toc-text">原型模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#代码实战"><span class="toc-number">1.1.</span> <span class="toc-text">代码实战</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#装饰者模式"><span class="toc-number">1.2.</span> <span class="toc-text">装饰者模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#组合模式将对象组合成树形结构以表示“部分-整体_”"><span class="toc-number">1.3.</span> <span class="toc-text">组合模式将对象组合成树形结构以表示“部分-整体  ”</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原型模式"><span class="toc-number">1.</span> <span class="toc-text">原型模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#代码实战"><span class="toc-number">1.1.</span> <span class="toc-text">代码实战</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#装饰者模式"><span class="toc-number">1.2.</span> <span class="toc-text">装饰者模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#组合模式"><span class="toc-number">1.3.</span> <span class="toc-text">组合模式</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
