@@ -1,93 +1,161 @@
-
- <!DOCTYPE HTML>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>阻塞与非阻塞IO | libchaos Blog</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
-    
-    <meta name="author" content="libhaos">
-    
-    <meta name="description" content="阻塞与非阻塞IO
+  <title>阻塞与非阻塞IO | libchaos Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="阻塞与非阻塞IO
 Node中，你需要对回调函数如何修改当前内存中的变量(状态)特别小心。
-1234567var books = [&quot;红楼梦&quot;, &quot;三国演义&quot;];function serveBooks()&amp;#123;  //给客户端返回的HTML代码  var html = &#39;&amp;lt;b&amp;gt;&#39; +">
-    
-    
-    
-    
-    
+1234567var books = [&quot;红楼梦&quot;, &quot;三国演义&quot;];function serveBooks()&amp;#123;  //给客户端返回的HTML代码  var html = &apos;&amp;lt;b&amp;gt;&apos; + books.join(&apos;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;b&amp;gt;&apos;)+&apos;&amp;lt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阻塞与非阻塞IO">
+<meta property="og:url" content="http://yoursite.com/2015/09/25/阻塞与非阻塞IO/index.html">
+<meta property="og:site_name" content="libchaos Blog">
+<meta property="og:description" content="阻塞与非阻塞IO
+Node中，你需要对回调函数如何修改当前内存中的变量(状态)特别小心。
+1234567var books = [&quot;红楼梦&quot;, &quot;三国演义&quot;];function serveBooks()&amp;#123;  //给客户端返回的HTML代码  var html = &apos;&amp;lt;b&amp;gt;&apos; + books.join(&apos;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;b&amp;gt;&apos;)+&apos;&amp;lt;">
+<meta property="og:updated_time" content="2015-09-26T05:58:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="阻塞与非阻塞IO">
+<meta name="twitter:description" content="阻塞与非阻塞IO
+Node中，你需要对回调函数如何修改当前内存中的变量(状态)特别小心。
+1234567var books = [&quot;红楼梦&quot;, &quot;三国演义&quot;];function serveBooks()&amp;#123;  //给客户端返回的HTML代码  var html = &apos;&amp;lt;b&amp;gt;&apos; + books.join(&apos;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;b&amp;gt;&apos;)+&apos;&amp;lt;">
+  
+    <link rel="alternative" href="/atom.xml" title="libchaos Blog" type="application/atom+xml">
+  
+  
     <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/pacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
 </head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/avatar.png" class="js-avatar" style="width: 100%;height: 100%;opacity: 1;">
+		</a>
 
-  <body>
-    <header>
-      <div>
+		<hgroup>
+		  <h1 class="header-author"><a href="/">libhaos</a></h1>
+		</hgroup>
+
 		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.svg" alt="libchaos Blog" title="libchaos Blog"/></a>
+		<p class="header-subtitle">Fake it</p>
+		
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/lonelyclick" title="github">github</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+
+				
+
+				
 			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="libchaos Blog">libchaos Blog</a></h1>
-				<h2 class="blog-motto">Fake it</h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-					<li>
-					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
-						<input type="hidden" name="q" value="site:yoursite.com">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+		</div>
+	</header>
 </div>
 
-    </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<h1 class="header-author js-mobile-header hide">libhaos</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/img/avatar.png" class="js-avatar" style="width: 100%;height: 100%;opacity: 1;">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">libhaos</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">Fake it</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lonelyclick" title="github">github</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-阻塞与非阻塞IO" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/09/25/阻塞与非阻塞IO/" class="article-date">
+  	<time datetime="2015-09-25T10:38:43.000Z" itemprop="datePublished">2015-09-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
     
-      <a href="/2015/09/25/阻塞与非阻塞IO/" title="阻塞与非阻塞IO" itemprop="url">阻塞与非阻塞IO</a>
-  </h1>
-  <p class="article-author">By
+      <input type="hidden" class="isFancy" />
     
-      <a href="http://yoursite.com" title="libhaos">libhaos</a>
-    </p>
-  <p class="article-time">
-    <time datetime="2015-09-25T10:38:43.000Z" itemprop="datePublished">2015-09-25</time>
-    更新日期:<time datetime="2015-09-26T05:58:26.000Z" itemprop="dateModified">2015-09-26</time>
     
-  </p>
-</header>
-	<div class="article-content">
-		
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#阻塞与非阻塞IO"><span class="toc-number">1.</span> <span class="toc-text">阻塞与非阻塞IO</span></a></li></ol>
-		</div>
-		
-		<h1 id="阻塞与非阻塞IO">阻塞与非阻塞IO</h1><hr>
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      阻塞与非阻塞IO
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/阻塞-非阻塞-IO/">阻塞 非阻塞 IO</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="阻塞与非阻塞IO">阻塞与非阻塞IO</h1><hr>
 <p>Node中，你需要对回调函数如何修改当前内存中的变量(状态)特别小心。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> books = [<span class="string">"红楼梦"</span>, <span class="string">"三国演义"</span>];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">serveBooks</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//给客户端返回的HTML代码</span></span><br><span class="line">  <span class="keyword">var</span> html = <span class="string">'&lt;b&gt;'</span> + books.join(<span class="string">'&lt;/b&gt;&lt;br&gt;&lt;b&gt;'</span>)+<span class="string">'&lt;/b&gt;'</span>;</span><br><span class="line">  books = [];</span><br><span class="line">  <span class="keyword">return</span> html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>等价的PHP代码</p>
@@ -99,216 +167,98 @@ Node中，你需要对回调函数如何修改当前内存中的变量(状态)�
 <p>REQUEST REQUEST REQUEST</p>
 <p>node.js只有借助child_process 才能生成新的process</p>
 <p>采用事件轮询意味 甚么 呢？<br>  Node会先注册事件， 随后，不停的询问内核，这些事情是否已经分发</p>
-  
-	</div>
-		<footer class="article-footer clearfix">
 
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/阻塞-非阻塞-IO/">阻塞 非阻塞 IO</a>
+      
+    </div>
+    
   </div>
-
-
-
-
-<div class="article-share" id="share">
-
-  <div data-url="http://yoursite.com/2015/09/25/阻塞与非阻塞IO/" data-title="阻塞与非阻塞IO | libchaos Blog" data-tsina="null" class="share clearfix">
-  </div>
-
-</div>
-</footer>   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/2015/09/25/python算法/" title="python算法">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  python算法</span>
-</a>
-</div>
-
-
-<div class="next">
-<a href="/2015/09/24/了不起的node.js学习笔记/"  title="了不起的node.js学习笔记">
- <strong>NEXT:</strong><br/> 
- <span>了不起的node.js学习笔记
-</span>
-</a>
-</div>
-
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/09/25/python算法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          python算法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/09/24/了不起的node.js学习笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">了不起的node.js学习笔记</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
 </nav>
 
-	
-</div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#阻塞与非阻塞IO"><span class="toc-number">1.</span> <span class="toc-text">阻塞与非阻塞IO</span></a></li></ol>
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
-<aside class="clearfix">
-
   
+</article>
 
-  
-<div class="tagslist">
-	<p class="asidetitle">标签</p>
-		<ul class="clearfix">
-		
-			<li><a href="/tags/阻塞-非阻塞-IO/" title="阻塞 非阻塞 IO">阻塞 非阻塞 IO<sup>1</sup></a></li>
-		
-		</ul>
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
 </div>
 
 
-  <div class="rsspart">
-	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="阻塞与非阻塞IO" data-title="阻塞与非阻塞IO" data-url="http://yoursite.com/2015/09/25/阻塞与非阻塞IO/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
 </div>
 
-</aside>
+
+
+
 </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 libhaos 京ICP备15063164号-1
+    	</div>
     </div>
-    <footer><div id="footer" >
-	
-	<div class="line">
-		<span></span>
-		<div class="author"></div>
-	</div>
-	
-	
-	<div class="social-font clearfix">
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
-		
-		<a href="http://yoursite.com" target="_blank" title="libhaos">libhaos</a>
-		
-		</p>
-</div>
+  </div>
 </footer>
-    <script src="/js/jquery-2.1.0.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?22e3c165af19aeeb29ba072dbbe13beb";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
 </script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      h  = $('article h2')
-      ah = $('article h2'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  if(ah.length==0){
-    t.css('display','none');
-  }else{
-    c.click(function(){
-      ta.css('display', 'block').addClass('fadeIn');
-    });
-    o.click(function(){
-      ta.css('display', 'none');
-    });
-    $(window).scroll(function(){
-      ta.css("top",Math.max(140,320-$(this).scrollTop()));
-    });
-  };
-});
-</script>
-
-
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina');
-  var html = [
-  '<a href="#" class="overlay" id="qrcode"></a>',
-  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
-  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
-  $('.article-share-qrcode').click(function(){
-    var imgSrc = $('#qrcode-pic').attr('data-src');
-    $('#qrcode-pic').attr('src', imgSrc);
-    $('#qrcode-pic').load(function(){
-        $('.qrcode strong').text(' ');
-    });
-  });
-});     
-</script>
-
-
-
-
-
-
-  </body>
+    </div>
+    
+  </div>
+</body>
 </html>
