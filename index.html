@@ -20,7 +20,7 @@
   
     <link rel="icon" href="http://7xojpa.com1.z0.glb.clouddn.com/blog.ico">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <div id="container">
@@ -113,6 +113,222 @@
 
       <div class="body-wrap">
   
+    <article id="post-js-原型" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/11/js-原型/" class="article-date">
+  	<time datetime="2016-03-11T15:33:38.000Z" itemprop="datePublished">2016-03-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/11/js-原型/">js_原型</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-异步与同步" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/10/异步与同步/" class="article-date">
+  	<time datetime="2016-03-10T11:51:32.000Z" itemprop="datePublished">2016-03-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/10/异步与同步/">异步与同步</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="异步与同步">异步与同步</h1><p>从调用方式上，可以把他们分为3类： 同步调用，回调和异步调用。同步调用是一种阻塞式的调用，调用要等待对方执行完毕才返回，他是一种单向调用；回调是一种双向调用模式，也就是说，被调用方在接口被调用时也会调用对方的接口；异步调用是一种类似消息或事件机制，不过他的调用方向刚好相反， 接口的服务在收到某种讯息或发生某种事件时，会主动通知客户方（就是调用客户方的接口）。</p>
+<ul>
+<li>实例<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">var</span> data = fs.readFileSync(<span class="string">'new.txt'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(data.toString());</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>readFileSync是同步方法，会阻塞直接得到结果后，才继续执行之后的语句。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line">fs.readFile(<span class="string">'new.txt'</span>, <span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">err, data</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(data.toString());</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'first me run'</span>);</span><br></pre></td></tr></table></figure>
+<p>会发现console.log(‘first me run’)先执行。因为readfile是异步函数，不会阻塞之后的语句。callback是回调函数，等到底层读完数据后， 会调用该函数。<br>node.js中回调的函数的规范是：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">err, args0, args1...</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面模拟一个异步函数，和回调函数，加深理解。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sumAsyn</span>(<span class="params">a, b, callback</span>) </span>&#123;</span><br><span class="line">  setTimeout(</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(<span class="keyword">typeof</span> a === <span class="string">'number'</span> &amp;&amp; <span class="keyword">typeof</span> b === <span class="string">'number'</span>)&#123;</span><br><span class="line">        callback(<span class="literal">null</span>, a + b);</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        callback(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'must be number'</span>));</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  , <span class="number">200</span>)</span><br><span class="line">&#125;</span><br><span class="line">sumAsyn(<span class="number">2</span>, <span class="number">3</span>, <span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">err, rs</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(rs);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'first run!!'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>我们定义一个sumAsyn异步函数，运行后先执行console.log(‘first run!!’)。</p>
+<p>在node开始所有i/o应该用异步。</p>
+<h2 id="异步">异步</h2><p>所谓”异步”，简单说就是一个任务分成两段，先执行第一段，然后转而执行其他任务，等做好了准备，再回过头执行第二段。</p>
+<h2 id="回调函数">回调函数</h2><p>JavaScript语言对异步编程的实现，就是回调函数。所谓回调函数，就是把任务的第二段单独写在一个函数里面，等到重新执行这个任务的时候，就直接调用这个函数。它的英语名字callback，直译过来就是”重新调用”。<br>一个有趣的问题是，为什么Node.js约定，回调函数的第一个参数，必须是错误对象err（如果没有错误，该参数就是null）？原因是执行分成两段，在这两段之间抛出的错误，程序无法捕捉，只能当作参数，传入第二段。</p>
+<h2 id="Promise">Promise</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// function asyncFun(a, b, cb) &#123;</span></span><br><span class="line"><span class="comment">//   setTimeout(function () &#123;</span></span><br><span class="line"><span class="comment">//     cb(a + b);</span></span><br><span class="line"><span class="comment">//   &#125;, 200);</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// //异步的</span></span><br><span class="line"><span class="comment">// asyncFun(1, 2, function (result) &#123;</span></span><br><span class="line"><span class="comment">//   if(result &gt; 2)&#123;</span></span><br><span class="line"><span class="comment">//     asyncFun(result, 2, function (result) &#123;</span></span><br><span class="line"><span class="comment">//       if(result &gt; 4)&#123;</span></span><br><span class="line"><span class="comment">//         asyncFun(result, 2, function (result) &#123;</span></span><br><span class="line"><span class="comment">//           console.log('ok');</span></span><br><span class="line"><span class="comment">//         &#125;);</span></span><br><span class="line"><span class="comment">//       &#125;</span></span><br><span class="line"><span class="comment">//     &#125;);</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">// &#125;);</span></span><br><span class="line"><span class="comment">// console.log(2);</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">asyncFun</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      resolve(a + b);</span><br><span class="line">    &#125;, <span class="number">200</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line">asyncFun(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(result &gt; <span class="number">2</span>)&#123;</span><br><span class="line">      <span class="keyword">return</span> asyncFun(result, <span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(result &gt; <span class="number">4</span>)&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'ok'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>可以看到，Promise 的写法只是回调函数的改进，使用then方法以后，异步任务的两段执行看得更清楚了，除此以外，并无新意。</p>
+<p>Promise 的最大问题是代码冗余，原来的任务被Promise 包装了一下，不管什么操作，一眼看去都是一堆 then，原来的语义变得很不清楚。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-javascript异步" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/10/javascript异步/" class="article-date">
+  	<time datetime="2016-03-10T11:48:23.000Z" itemprop="datePublished">2016-03-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/10/javascript异步/">javascript异步</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-异步解决方案" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/10/异步解决方案/" class="article-date">
+  	<time datetime="2016-03-10T11:47:42.000Z" itemprop="datePublished">2016-03-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/10/异步解决方案/">异步解决方案</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="post-connect-md" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -198,7 +414,7 @@
 </ol>
 <hr>
 <h2 id="一个简单的http_web服务器">一个简单的http web服务器</h2><p>//回到createServer的回调函数，我们需要检查URL是否和服务器的目录下的文件匹配，如果匹配，则读取该文件并展示出来。以后，可能会添加更多的图片，所以要确保灵活以支持这种情况。<br>// 首先 要检查请求方法是GET并且URL以/images开始，.jpg结束。如果URL 为/的话，则响应index.html(调用后面要实现的serve函数)。否则，发送404 not found。接着，使用fs.stat来检查文件是否存在。者里使用NODE中全局常量__dirname来获取当前服务器所在的路劲。在首个if语句后，添加如下代码：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> server = http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="string">'GET'</span> == req.method &amp;&amp; <span class="string">'/images'</span> == req.url.substr(<span class="number">0</span>, <span class="number">7</span>) &amp;&amp; <span class="string">'.jpg'</span> == req.url.substr(-<span class="number">4</span>))&#123;</span><br><span class="line">        fs.stat(__dirname + req.url, <span class="function"><span class="keyword">function</span>(<span class="params">err, stat</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(err || !stat.isFile())&#123;</span><br><span class="line">                res.writeHead(<span class="number">404</span>);</span><br><span class="line">                res.end(<span class="string">'not found'</span>);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            serve(__dirname + req.url, <span class="string">'application/jpg'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">'GET'</span> == req.method &amp;&amp; <span class="string">'/'</span> == req.url)&#123;</span><br><span class="line">        serve(__dirname+<span class="string">'/index.html'</span>, <span class="string">'text/html'</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        res.writeHead(<span class="number">404</span>);</span><br><span class="line">        res.end(<span class="string">'not found'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">serve</span>(<span class="params">path, type</span>)</span>&#123;</span><br><span class="line">        res.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>: type&#125;);</span><br><span class="line">        fs.createReadStream(path).pipe(res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.listen(<span class="number">3000</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'server listening in 3000...'</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> server = http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="string">'GET'</span> == req.method &amp;&amp; <span class="string">'/images'</span> == req.url.substr(<span class="number">0</span>, <span class="number">7</span>) &amp;&amp; <span class="string">'.jpg'</span> == req.url.substr(<span class="number">-4</span>))&#123;</span><br><span class="line">        fs.stat(__dirname + req.url, <span class="function"><span class="keyword">function</span>(<span class="params">err, stat</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(err || !stat.isFile())&#123;</span><br><span class="line">                res.writeHead(<span class="number">404</span>);</span><br><span class="line">                res.end(<span class="string">'not found'</span>);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            serve(__dirname + req.url, <span class="string">'application/jpg'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">'GET'</span> == req.method &amp;&amp; <span class="string">'/'</span> == req.url)&#123;</span><br><span class="line">        serve(__dirname+<span class="string">'/index.html'</span>, <span class="string">'text/html'</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        res.writeHead(<span class="number">404</span>);</span><br><span class="line">        res.end(<span class="string">'not found'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">serve</span>(<span class="params">path, type</span>)</span>&#123;</span><br><span class="line">        res.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>: type&#125;);</span><br><span class="line">        fs.createReadStream(path).pipe(res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.listen(<span class="number">3000</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'server listening in 3000...'</span>);</span><br></pre></td></tr></table></figure>
 <p>中间件<br>通过connect来实现一个简单的网站</p>
 <ul>
 <li>托管静态文件</li>
@@ -299,7 +515,7 @@
 <p>拟物化</p>
 <p>  袋鼠和袋鼠崽子</p>
 <p>  作用<br>  1.原型对象本身就是有效利用了每个构造创建的对象<br>  注意事项：<br>  1.注意浅拷贝和深拷贝</p>
-<h2 id="代码实战">代码实战</h2>  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">  <span class="doctype">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">title</span>&gt;</span>test<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">    <span class="comment">//原型</span></span><br><span class="line">    <span class="keyword">var</span> myobj = &#123;</span><br><span class="line">        str: <span class="string">"mysting"</span>,</span><br><span class="line">        num: <span class="number">1</span>,</span><br><span class="line">        myarr: [],</span><br><span class="line">        myobj: &#123;</span><br><span class="line">            innerobj: &#123;</span><br><span class="line">                test: <span class="number">25</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">clone</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">        <span class="comment">// var ret = &#123;&#125;, k;</span></span><br><span class="line">        <span class="comment">// for(k in obj)&#123;</span></span><br><span class="line">        <span class="comment">//     ret[k] = obj[k];</span></span><br><span class="line">        <span class="comment">//  &#125;</span></span><br><span class="line">        <span class="keyword">var</span> ret, k, b;</span><br><span class="line">        <span class="keyword">if</span>((b = (obj <span class="keyword">instanceof</span> <span class="built_in">Array</span>))|| obj <span class="keyword">instanceof</span> <span class="built_in">Object</span>)&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'init'</span>);</span><br><span class="line">            ret = b?[]: &#123;&#125;;</span><br><span class="line">            <span class="keyword">for</span>(k <span class="keyword">in</span> obj)&#123;</span><br><span class="line">                <span class="keyword">if</span>(obje[k] <span class="keyword">instanceof</span> <span class="built_in">Array</span> || obj[k] <span class="keyword">instanceof</span> <span class="built_in">Object</span>)&#123;ret[k] = clone(obj[k]);&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    ret[k] = obj[k];</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//浅拷贝</span></span><br><span class="line">    <span class="keyword">var</span> result = clone(myobj);</span><br><span class="line">    result.myobj.innerobj[test] = <span class="number">12</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="代码实战">代码实战</h2>  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">  <span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>test<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">    <span class="comment">//原型</span></span><br><span class="line">    <span class="keyword">var</span> myobj = &#123;</span><br><span class="line">        str: <span class="string">"mysting"</span>,</span><br><span class="line">        num: <span class="number">1</span>,</span><br><span class="line">        myarr: [],</span><br><span class="line">        myobj: &#123;</span><br><span class="line">            innerobj: &#123;</span><br><span class="line">                test: <span class="number">25</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">clone</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">        <span class="comment">// var ret = &#123;&#125;, k;</span></span><br><span class="line">        <span class="comment">// for(k in obj)&#123;</span></span><br><span class="line">        <span class="comment">//     ret[k] = obj[k];</span></span><br><span class="line">        <span class="comment">//  &#125;</span></span><br><span class="line">        <span class="keyword">var</span> ret, k, b;</span><br><span class="line">        <span class="keyword">if</span>((b = (obj <span class="keyword">instanceof</span> <span class="built_in">Array</span>))|| obj <span class="keyword">instanceof</span> <span class="built_in">Object</span>)&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'init'</span>);</span><br><span class="line">            ret = b?[]: &#123;&#125;;</span><br><span class="line">            <span class="keyword">for</span>(k <span class="keyword">in</span> obj)&#123;</span><br><span class="line">                <span class="keyword">if</span>(obje[k] <span class="keyword">instanceof</span> <span class="built_in">Array</span> || obj[k] <span class="keyword">instanceof</span> <span class="built_in">Object</span>)&#123;ret[k] = clone(obj[k]);&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    ret[k] = obj[k];</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//浅拷贝</span></span><br><span class="line">    <span class="keyword">var</span> result = clone(myobj);</span><br><span class="line">    result.myobj.innerobj[test] = <span class="number">12</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="装饰者模式">装饰者模式</h2><p>装饰者用于包装同接口的对象，向方法添加行为，还可以设置为引用。</p>
 <p>装饰着用于通过重载方法的形式添加新功能，该模式可以在被装饰者前面或者后面<br>加上自己行为以达到特定的目的。</p>
 <p>装饰家居<br>    给门上加上花边</p>
@@ -429,12 +645,12 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="python_数据结构">python 数据结构</h1><h3 id="栈">栈</h3><p>  一端开口，一端封闭的容器，栈只能对其栈顶的数据进行操作</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(st, size)</span>:</span></span><br><span class="line">    st.stack = []</span><br><span class="line">    st.size = size</span><br><span class="line">    st.top = -<span class="number">1</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(st, content)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> st.Full():</span><br><span class="line">      <span class="keyword">print</span> <span class="string">"Stack is full."</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      st.stack.append(content)</span><br><span class="line">      st.top += <span class="number">1</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(st)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> st.Empty():</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      st.top -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">Full</span><span class="params">(st)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> st.top == st.size:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">Empty</span><span class="params">(st)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> st.top == -<span class="number">1</span>:</span><br><span class="line">      <span class="keyword">print</span> <span class="string">"Stack is Empty!"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(st, size)</span>:</span></span><br><span class="line">    st.stack = []</span><br><span class="line">    st.size = size</span><br><span class="line">    st.top = <span class="number">-1</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(st, content)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> st.Full():</span><br><span class="line">      <span class="keyword">print</span> <span class="string">"Stack is full."</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      st.stack.append(content)</span><br><span class="line">      st.top += <span class="number">1</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(st)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> st.Empty():</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      st.top -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">Full</span><span class="params">(st)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> st.top == st.size:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">Empty</span><span class="params">(st)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> st.top == <span class="number">-1</span>:</span><br><span class="line">      <span class="keyword">print</span> <span class="string">"Stack is Empty!"</span></span><br></pre></td></tr></table></figure>
 <h3 id="队列">队列</h3><p>两端都通的容器， 一端只能删， 一端只能进<br>数据流向是单向的。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Queue</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(qu, size)</span>:</span></span><br><span class="line">    qu.queue = []</span><br><span class="line">    qu.size = size</span><br><span class="line">    qu.head = <span class="number">1</span></span><br><span class="line">    qu.tail = -<span class="number">1</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">Empty</span><span class="params">(qu)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> qu.head == qu.tail:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">Full</span><span class="params">(qu)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> qu.tail - qu.head + <span class="number">1</span> == size:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">enQueue</span><span class="params">(qu, content)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> qu.Full():</span><br><span class="line">      <span class="keyword">print</span> <span class="string">"Queue is Full!!"</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      qu.queue.append(content)</span><br><span class="line">      qu.tail += <span class="number">1</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">outQueue</span><span class="params">(qu)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> qu.Empty():</span><br><span class="line">      <span class="keyword">print</span> <span class="string">"queue is empyt..."</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      qu.head += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Queue</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(qu, size)</span>:</span></span><br><span class="line">    qu.queue = []</span><br><span class="line">    qu.size = size</span><br><span class="line">    qu.head = <span class="number">1</span></span><br><span class="line">    qu.tail = <span class="number">-1</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">Empty</span><span class="params">(qu)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> qu.head == qu.tail:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">Full</span><span class="params">(qu)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> qu.tail - qu.head + <span class="number">1</span> == size:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">enQueue</span><span class="params">(qu, content)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> qu.Full():</span><br><span class="line">      <span class="keyword">print</span> <span class="string">"Queue is Full!!"</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      qu.queue.append(content)</span><br><span class="line">      qu.tail += <span class="number">1</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">outQueue</span><span class="params">(qu)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> qu.Empty():</span><br><span class="line">      <span class="keyword">print</span> <span class="string">"queue is empyt..."</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      qu.head += <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <h3 id="链表">链表</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, data, next=None)</span>:</span></span><br><span class="line">    self.data = data</span><br><span class="line">    self.next = next</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">LinkList</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, node)</span>:</span></span><br><span class="line">    self.head = node</span><br><span class="line">    self.head.next = <span class="keyword">None</span></span><br><span class="line">    self.tail = self.head</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(self, node)</span>:</span></span><br><span class="line">    self.tail.next = node</span><br><span class="line">    self.tail = self.tail.next</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">view</span><span class="params">(self)</span>:</span></span><br><span class="line">    node = self.head</span><br><span class="line">    link_str = <span class="string">' '</span></span><br><span class="line">    <span class="keyword">while</span> node <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">      <span class="keyword">if</span> node.next <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">        link_str = link_str + str(node.data) + <span class="string">"--&gt;"</span></span><br><span class="line">      <span class="keyword">else</span>:</span><br><span class="line">        link_str += str(node.data)</span><br><span class="line">      node = node.next</span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> link_str</span><br></pre></td></tr></table></figure>
 <h3 id="二叉树">二叉树</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BtreeNode</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, lft=None, rgh=None, data=<span class="number">0</span>)</span>:</span></span><br><span class="line">    self.lft = lft</span><br><span class="line">    self.rgh = rgh</span><br><span class="line">    self.data = data</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Btree</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, base=None)</span>:</span></span><br><span class="line">    self.base = base</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">empty</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> self.base <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">qout</span><span class="params">(self, node)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> node <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">print</span> node.data</span><br><span class="line">    self.qout(node.lft)</span><br><span class="line">    self.qout(node.rgh)</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">mout</span><span class="params">(self, node)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> node <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    self.mout(node.lft)</span><br><span class="line">    <span class="keyword">print</span> node.data</span><br><span class="line">    self.mout(node.rgh)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">hout</span><span class="params">(self, node)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> node <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    self.hout(node.lft)</span><br><span class="line">    self.hout(node.rgh)</span><br><span class="line">    <span class="keyword">print</span> node.data</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">##bitmap</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bitmap</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, max)</span>:</span></span><br><span class="line">    self.size = int((max + <span class="number">31</span> -<span class="number">1</span>) / <span class="number">31</span>)</span><br><span class="line">    self.array = [<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(self.size)]</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">bit_index</span><span class="params">(self, num)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> num % <span class="number">31</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">set</span><span class="params">(self, num)</span>:</span></span><br><span class="line">    elem_index = num / <span class="number">31</span></span><br><span class="line">    byte_index = self.bit_index(num)</span><br><span class="line">    elem = self.array［elem_index］  </span><br><span class="line">    self.array[elem_index] = elem | (<span class="number">1</span> &lt;&lt; byte_index)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(self, i)</span>:</span></span><br><span class="line">    elem_index = i / <span class="number">31</span></span><br><span class="line">    byte_index = self.bit_index(i)</span><br><span class="line">    <span class="keyword">if</span> self.array[elem_index] &amp; (<span class="number">1</span> &lt;&lt; byte_index):</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">  MAX = ord(<span class="string">'z'</span>)</span><br><span class="line">  suffle = [x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="string">'coledraw'</span>]</span><br><span class="line">  res = []</span><br><span class="line">  bitmap = Bitmap(MAX)</span><br><span class="line">  <span class="keyword">for</span> c <span class="keyword">in</span> suffle:</span><br><span class="line">    bitmap.set(ord(c))</span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(MAX + <span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> bitmap.test(i):</span><br><span class="line">      res.append(chr(i))</span><br><span class="line">  <span class="keyword">print</span> <span class="string">'%s'</span> %suffle</span><br><span class="line">  <span class="keyword">print</span> <span class="string">'ordered %s'</span> %res</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">##bitmap</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bitmap</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, max)</span>:</span></span><br><span class="line">    self.size = int((max + <span class="number">31</span> <span class="number">-1</span>) / <span class="number">31</span>)</span><br><span class="line">    self.array = [<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(self.size)]</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">bit_index</span><span class="params">(self, num)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> num % <span class="number">31</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">set</span><span class="params">(self, num)</span>:</span></span><br><span class="line">    elem_index = num / <span class="number">31</span></span><br><span class="line">    byte_index = self.bit_index(num)</span><br><span class="line">    elem = self.array［elem_index］  </span><br><span class="line">    self.array[elem_index] = elem | (<span class="number">1</span> &lt;&lt; byte_index)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(self, i)</span>:</span></span><br><span class="line">    elem_index = i / <span class="number">31</span></span><br><span class="line">    byte_index = self.bit_index(i)</span><br><span class="line">    <span class="keyword">if</span> self.array[elem_index] &amp; (<span class="number">1</span> &lt;&lt; byte_index):</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">  MAX = ord(<span class="string">'z'</span>)</span><br><span class="line">  suffle = [x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="string">'coledraw'</span>]</span><br><span class="line">  res = []</span><br><span class="line">  bitmap = Bitmap(MAX)</span><br><span class="line">  <span class="keyword">for</span> c <span class="keyword">in</span> suffle:</span><br><span class="line">    bitmap.set(ord(c))</span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(MAX + <span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> bitmap.test(i):</span><br><span class="line">      res.append(chr(i))</span><br><span class="line">  <span class="keyword">print</span> <span class="string">'%s'</span> %suffle</span><br><span class="line">  <span class="keyword">print</span> <span class="string">'ordered %s'</span> %res</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#图的视线</span></span><br><span class="line">chart ＝  &#123;<span class="string">'A'</span>:[<span class="string">"B"</span>, <span class="string">"D"</span>], <span class="string">'C'</span>:[<span class="string">'E'</span>], <span class="string">'D'</span>:[<span class="string">'C'</span>, <span class="string">'E'</span>]&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">path</span><span class="params">(chart, x, y, pathd=[])</span>:</span></span><br><span class="line">  pathd = pathd + [x]</span><br><span class="line">  <span class="keyword">if</span> x == y:</span><br><span class="line">    <span class="keyword">return</span> pathd</span><br><span class="line">  <span class="keyword">if</span> <span class="keyword">not</span> chart.has_key(x):</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">  <span class="keyword">for</span> node <span class="keyword">in</span> chart[x]:</span><br><span class="line">    <span class="keyword">if</span> node <span class="keyword">not</span> <span class="keyword">in</span> pathd:</span><br><span class="line">      new_node = path(chart, node, y, pathd)</span><br><span class="line">      <span class="keyword">if</span> new_node:</span><br><span class="line">        <span class="keyword">return</span> new_node</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#quicksort</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quicksort</span><span class="params">(array, i, j)</span>:</span></span><br><span class="line">  <span class="keyword">if</span> i &lt; j:</span><br><span class="line">    base = find_sorted_index(array, i, j)</span><br><span class="line">    quicksort(array, i, base)</span><br><span class="line">    quicksort(array, base+<span class="number">1</span>, j)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_sorted_index</span><span class="params">(array, i, j)</span>:</span></span><br><span class="line"></span><br><span class="line">  base = array[i]</span><br><span class="line">  <span class="keyword">while</span> i &lt; j:</span><br><span class="line">    <span class="keyword">while</span> i &lt; j <span class="keyword">and</span> array[j]&gt;=base:</span><br><span class="line">      j -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; j <span class="keyword">and</span> array[j] &lt; base:</span><br><span class="line">      array[i] = array[j]</span><br><span class="line">      i += <span class="number">1</span></span><br><span class="line">      array[j] = array[i]</span><br><span class="line">  array[i] = base</span><br><span class="line">  <span class="keyword">return</span> i</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#select sorted</span></span><br></pre></td></tr></table></figure>
@@ -493,7 +709,7 @@
 <p>Node中，你需要对回调函数如何修改当前内存中的变量(状态)特别小心。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> books = [<span class="string">"红楼梦"</span>, <span class="string">"三国演义"</span>];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">serveBooks</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//给客户端返回的HTML代码</span></span><br><span class="line">  <span class="keyword">var</span> html = <span class="string">'&lt;b&gt;'</span> + books.join(<span class="string">'&lt;/b&gt;&lt;br&gt;&lt;b&gt;'</span>)+<span class="string">'&lt;/b&gt;'</span>;</span><br><span class="line">  books = [];</span><br><span class="line">  <span class="keyword">return</span> html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>等价的PHP代码</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$books</span> = <span class="keyword">array</span>(<span class="string">'harry'</span>, <span class="string">'dollars'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">serveBooks</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="variable">$html</span> = <span class="string">'&lt;b&gt;'</span>.join(<span class="variable">$books</span>, <span class="string">'&lt;/b&gt;&lt;br&gt;&lt;b&gt;'</span>).<span class="string">'&lt;/b&gt;'</span>;</span><br><span class="line">  <span class="variable">$books</span> = <span class="keyword">array</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="variable">$html</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$books = <span class="keyword">array</span>(<span class="string">'harry'</span>, <span class="string">'dollars'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">serveBooks</span><span class="params">()</span></span>&#123;</span><br><span class="line">  $html = <span class="string">'&lt;b&gt;'</span>.join($books, <span class="string">'&lt;/b&gt;&lt;br&gt;&lt;b&gt;'</span>).<span class="string">'&lt;/b&gt;'</span>;</span><br><span class="line">  $books = <span class="keyword">array</span>();</span><br><span class="line">  <span class="keyword">return</span> $html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <pre><code>APACHE
 </code></pre><p>PHP         PHP<br>THREAD      THREAD</p>
 <p>REQUEST     REQUEST</p>
@@ -529,301 +745,17 @@
 
 
   
-    <article id="post-了不起的node.js学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
   
-    <div class="article-meta">
-      <a href="/2015/09/24/了不起的node.js学习笔记/" class="article-date">
-  	<time datetime="2015-09-24T02:21:17.000Z" itemprop="datePublished">2015-09-24</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/24/了不起的node.js学习笔记/">了不起的node.js学习笔记</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="chapter_2_JavaScript概览">chapter 2 JavaScript概览</h3><h4 id="介绍">介绍</h4><p>  js是基于原型,面向对象， 弱类型的的动态脚本语言。</p>
-<h4 id="Javascript基础">Javascript基础</h4><ul>
-<li><p>类型：</p>
-<ul>
-<li>基本类型包括number, boolean, string, null 及 undefined</li>
-<li><p>复杂类型包括array, function 及 object</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">5</span>;</span><br><span class="line">b = a;</span><br><span class="line">a; <span class="comment">// =&gt; 5</span></span><br><span class="line">b; <span class="comment">//=&gt; 6</span></span><br><span class="line"><span class="keyword">var</span> a = [<span class="string">'hello'</span>, <span class="string">'world'</span>, <span class="number">1</span>]; <span class="comment">//array</span></span><br><span class="line"><span class="keyword">var</span> b = a;</span><br><span class="line">b[<span class="number">0</span>] = <span class="string">'bye'</span>;</span><br><span class="line">a[<span class="number">0</span>]; <span class="comment">//=&gt; 'bye'</span></span><br><span class="line">b[<span class="number">0</span>]; <span class="comment">//= &gt;'bye'</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>类型的困惑(在js中判断变量值的类型并非易事)<br>你可以用两种方式来创建字符串</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'woot'</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'woot'</span>)</span><br><span class="line">a + b; <span class="comment">//=&gt; 'woot woot'</span></span><br><span class="line"><span class="comment">//要对这两个变量使用typeof和instanceof操作符，things go fun.</span></span><br><span class="line"><span class="keyword">typeof</span> a; <span class="comment">//'string'</span></span><br><span class="line"><span class="keyword">typeof</span> b; <span class="comment">//'object'</span></span><br><span class="line">a <span class="keyword">instanceof</span> <span class="built_in">String</span>; <span class="comment">//false</span></span><br><span class="line">b <span class="keyword">instanceof</span> <span class="built_in">String</span>; <span class="comment">//true</span></span><br><span class="line"><span class="comment">//事实上， 这两个变量值绝对都是字符串</span></span><br><span class="line">a.substr == b.substr; <span class="comment">//true</span></span><br><span class="line">a == b; <span class="comment">//true</span></span><br><span class="line">a === b; <span class="comment">//false 考虑类型是否相同了</span></span><br><span class="line"><span class="comment">//考虑有此差异，建议通过直观方式进行定义，避免使用new</span></span><br><span class="line"><span class="comment">//特定值会被判定为false： null, undefined, ' ', 0</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span>(a)&#123;</span><br><span class="line"><span class="comment">//will not execute</span></span><br><span class="line">&#125;</span><br><span class="line">a == <span class="literal">false</span>; <span class="comment">//true</span></span><br><span class="line">a === <span class="literal">false</span>; <span class="comment">//false</span></span><br><span class="line"><span class="comment">//值得注意的是：</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">null</span> == <span class="string">'object'</span>; <span class="comment">//很不幸，结果为true</span></span><br><span class="line"><span class="comment">//数组也不例外</span></span><br><span class="line"><span class="keyword">typeof</span> [] == <span class="string">'object'</span>; <span class="comment">// true;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>函数<br>  javascript 中函数最重要。它们都属于一等函数：可以作为引用存储在变量中，随后可以像其他对象一样，进行传递：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//将函数作为参数传递</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>Javascript 中所有的函数都可以进行命名。有一点很重要，就是要区分函数名和变量名。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="function"><span class="keyword">function</span> <span class="title">a</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="string">'function'</span> == <span class="keyword">typeof</span> a; <span class="comment">//true</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><p>THIS, FUNCTION#CALL, FUNCTION#APPLY<br>下面代码中函数被调用时， this的值是全局对象。在浏览器中，就是window对象。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">window</span> == <span class="keyword">this</span>; <span class="comment">//true</span></span><br><span class="line">&#125;;</span><br><span class="line">a();</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>调用以下函数时，使用.call 和.apply 方法可以改变this值：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.a == <span class="string">'b'</span>; <span class="comment">// true</span></span><br><span class="line">&#125;</span><br><span class="line">a.call(&#123;a: <span class="string">'b'</span>&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>call 和 apply 区别在于 call 接受参数列表， 而apply接受一个参数数组<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params">b, c</span>)</span>&#123;</span><br><span class="line">  b == <span class="string">'first'</span>; <span class="comment">//true;</span></span><br><span class="line">  c == <span class="string">'second'</span>; <span class="comment">//true</span></span><br><span class="line">&#125;;</span><br><span class="line">a.call(&#123;a: <span class="string">'b'</span>&#125;, <span class="string">'first'</span>, <span class="string">'second'</span>);</span><br><span class="line">a.apply(&#123;a: <span class="string">'b'</span>&#125;, [<span class="string">'first'</span>, <span class="string">'second'</span>]);</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>函数的参数数量<br>函数有一个很有意思的属性—参数数量， 该属性指明函数声明时可接受的参数数量。在javascript中，该属性名叫length。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="function"><span class="keyword">function</span>(<span class="params">a, b, c</span>);</span><br><span class="line"><span class="title">a</span>.<span class="title">length</span> == 3; //<span class="title">true</span></span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>尽管者在浏览器端很少使用， 但是， 他对我们非常重要， 因为一些流行的node框架通过此属性来根据不同的参数个数提供不同功能的。</p>
-<ul>
-<li>闭包<br>在javascript中， 每次函数调用时， 新的作用域就会产生。<br>在某个作用域中定义的变量只能在该作用域或其内部的作用域（该作用域中定义的作用域）中才能访问到：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">5</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">woot</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  a == <span class="number">5</span>; <span class="comment">//false;</span></span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">6</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    a == <span class="number">6</span>; <span class="comment">//true</span></span><br><span class="line">  &#125;;</span><br><span class="line">  test();</span><br><span class="line">&#125;;</span><br><span class="line">woot();</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>自执行函数是一种机制， 通过者中机制声明和调用一个匿名函数， 能够达到仅定义一个新作用域的作用。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">var</span> a = <span class="number">5</span>;&#125;)();</span><br><span class="line">a == <span class="number">3</span>; <span class="comment">//true;</span></span><br></pre></td></tr></table></figure></p>
-<p>自执行函数对声明私有变量很有用的， 这样可以让私有变量不被其他代码所访问。</p>
-<ul>
-<li>类<br>javascript中没有class关键词， 类只能通过函数来定义：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animal</span>(<span class="params"></span>)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>要给所有的Animal的实例定义函数， 可以通过prototype属性来完成：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Animal.prototype.eat = <span class="function"><span class="keyword">function</span>(<span class="params">food</span>)</span>&#123;</span><br><span class="line">  <span class="comment">//eat method</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>这里值得一提的时， 在prototype的函数内部， this并非像普通函数那样指向global对象， 而是指向通过该创建的实例对象：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animal</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line">Animal.prototype.getName()&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> animal = <span class="keyword">new</span> Animal(<span class="string">'tobi'</span>);</span><br><span class="line">a.getName == <span class="string">'tobi'</span>; <span class="comment">//true</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>继承<br>javascript有基于原型的继承的特定。通常，你可以通过以下方式来模拟类型继承。<br>定义一个要继承自Animal的构造器。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Ferret</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line"><span class="comment">//要定义继承链， 首先创建一个Animal对象， 然后将其赋值给ferret.prototype.</span></span><br><span class="line"><span class="comment">//实现继承</span></span><br><span class="line">Ferret.prototype = <span class="keyword">new</span> Animal();</span><br><span class="line"><span class="comment">//随后可以为子类定义属性和方法：</span></span><br><span class="line">Ferret.prototype.type = <span class="string">'domestic'</span>;</span><br><span class="line"><span class="comment">//还可以通过prototype来重写和调用父类函数</span></span><br><span class="line">Ferret.prototype.eat = <span class="function"><span class="keyword">function</span>(<span class="params">food</span>)</span>&#123;</span><br><span class="line">  Animal.prototype.eat.call(<span class="keyword">this</span>, foot);<span class="comment">//调用父类函数</span></span><br><span class="line">  <span class="comment">//ferrte特有的逻辑写在这里</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>慕课网<br><img src="http://upload-images.jianshu.io/upload_images/891491-b095e4c9e1d0083f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="92C8DD3E-A2FC-418C-9DDB-C8ED9C8C4022.png"></p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> animal = <span class="keyword">new</span> Animal();</span><br><span class="line">animal <span class="keyword">instanceof</span> Animal <span class="comment">//true</span></span><br><span class="line">animal <span class="keyword">instanceof</span> Ferret; <span class="comment">// false</span></span><br><span class="line"><span class="keyword">var</span> ferret = <span class="keyword">new</span> Ferret();</span><br><span class="line">ferret <span class="keyword">instanceof</span> Animal; <span class="comment">//true</span></span><br><span class="line">ferret <span class="keyword">instanceof</span> Ferret; <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-<p>这项技术是同类方案中最好的， 不会改变instanceof操作符的结果。</p>
-<p>它的不足： 声明继承的时候创建的对象总要进行初始化(Ferret.prototype=new Animal),这种方式不好。一种解决办法就是在构造器中添加判断条件：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animal</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="literal">false</span> !== a) <span class="keyword">return</span>;</span><br><span class="line">  <span class="comment">//初始化</span></span><br><span class="line">&#125;</span><br><span class="line">Ferret.prototype = <span class="keyword">new</span> Animal(<span class="literal">false</span>);</span><br></pre></td></tr></table></figure></p>
-<p>另外一个办法就是在定义一个新的空的构造器， 并重写它的原型：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animal</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"> <span class="comment">//constructor stuff</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">f.prototype = Animal.prototype;</span><br><span class="line">Ferret.prototype = <span class="keyword">new</span> f;</span><br></pre></td></tr></table></figure></p>
-<p>v8 提供了更为简洁的解决方案</p>
-<ul>
-<li>TRY{} CATCH{}<br>try/catch 允许进行异常捕获。下述代码会抛出异常<blockquote>
-<p>var a = 5;<br>a[]<br>当函数抛出错误时， 代码就停止执行：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'hi'</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hi'</span>); <span class="comment">//这里永远不会被执行到</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
-</ul>
-<p>若使用try/catch则可以进行错误处理， 并让代码继续执行下去：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">5</span>;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    a[];</span><br><span class="line">&#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">    e <span class="keyword">instanceof</span> <span class="built_in">Error</span>; <span class="comment">//true</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'you get here!'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><p>v8中的javascript</p>
-<p>-OBJECT#KEYS<br>要想获取下述对象的键值(a and c):</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;a: <span class="string">'b'</span>, c: <span class="string">'d'</span>&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>通常会使用如下迭代方式：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> a) &#123;&#125;</span><br></pre></td></tr></table></figure></p>
-<p>通过对键值进行迭代， 可以将它们收集到一个数组中。不过， 如果采用如下方式对prototype进行扩展：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">object.prototype.c = <span class="string">'d'</span>;</span><br></pre></td></tr></table></figure></p>
-<p>为了避免迭代中获取c可以用hasOwnProperty来进行检查<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> a)&#123;</span><br><span class="line">    <span class="keyword">if</span>(a.hasOwnProperty(i))&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在v8中， 要获取对象的自由键， 还有更简单的方法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;a: <span class="string">'b'</span>, c: <span class="string">'d'</span>&#125;;</span><br><span class="line"><span class="built_in">Object</span>.keys(a);</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>ARRAY#ISARRAY<br>对数组使用typeof操作符会返回object， 然而大部分情况下， 我们要检查数组是否真的是数组。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.isArray(<span class="keyword">new</span> <span class="built_in">Array</span>) <span class="comment">//true</span></span><br><span class="line"><span class="built_in">Array</span>.isArray([]) <span class="comment">//true</span></span><br><span class="line"><span class="built_in">Array</span>.isArray(<span class="literal">null</span>) <span class="comment">//false</span></span><br><span class="line"><span class="built_in">Array</span>.isArray(<span class="built_in">arguments</span>) <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li><p>数组方法</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//要遍历数组， 可以使用forEach($.each（jquery中）)</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].forEach(<span class="function"><span class="keyword">function</span>(<span class="params">v</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(v);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">//要过滤数组中的元素</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].filter(<span class="function"><span class="keyword">function</span>(<span class="params">v</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> v &lt; <span class="number">3</span>;</span><br><span class="line">&#125;)；</span><br><span class="line"><span class="comment">//要改变数组中每个元素的值，可以使用map</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>,<span class="number">3</span> ].map(<span class="function"><span class="keyword">function</span>(<span class="params">v</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> v * <span class="number">2</span>;</span><br><span class="line">&#125;); <span class="comment">//[2, 4, 6]</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>字符串方法<br>要移除字符串首末的空格， 可以使用：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'  hello '</span>.trim();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>JSON<br>v8 提供了JSON.stringfy 和JSON.parse的方法来对JSON数据进行解码和编码</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = <span class="built_in">JSON</span>.parse(<span class="string">'&#123;"a": "b"&#125;'</span>);</span><br><span class="line">obj.a == <span class="string">'b'</span>; <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>FUNCTION#BIND<br>.bind 允许改变this的引用</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.hello == <span class="string">"world"</span>; <span class="comment">//true</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> b = a.bind(&#123;hello, <span class="string">"world"</span>&#125;);</span><br><span class="line">b();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>FUNCTION#NAME<br>V8还支持非标准的函数属性名：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="function"><span class="keyword">function</span> <span class="title">woot</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">a.name == <span class="string">"woot"</span>; <span class="comment">//true</span></span><br><span class="line"><span class="comment">//该属性用于v8内部的堆栈追踪。当错误抛出时， v8会显示一个堆栈追踪的信息， 会告诉你是哪个函数用导致了错误的发生。</span></span><br><span class="line"><span class="keyword">var</span> woot = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>();&#125;;</span><br><span class="line">woot();</span><br><span class="line"><span class="comment">//Error:</span></span><br><span class="line">  <span class="comment">// at [object context]: 1:32</span></span><br><span class="line"><span class="comment">//v8无法为函数的引用指派名字。然而，如果对函数进行了命名，v8就能在堆栈追踪中将函数名显示出来：</span></span><br><span class="line">   <span class="keyword">var</span> woot = <span class="function"><span class="keyword">function</span> <span class="title">buggy</span>(<span class="params"></span>)</span>&#123;<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>();&#125;</span><br><span class="line">  woot();</span><br><span class="line"><span class="comment">//Error</span></span><br><span class="line">  <span class="comment">//at buggy ([object context]: 1: 34)</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>PROTO</strong>(继承)<br>“<strong>proto</strong>“使得定义继承链变得更加容易</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animal</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Ferret</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">Ferret.prototype.__proto__ = Animal.prototype;</span><br><span class="line"><span class="comment">//这是一个非常有用的特性：</span></span><br><span class="line"> <span class="comment">//免去如下工作： 1.借助中间构造器， 2， 借助OOP工具类库。</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>存取器<br>你可以通过调用方法来定义属性， 访问属性就使用<strong>defineGetter</strong>, 设置属性就使用<strong>defineSetter</strong>.<br>比如, 为Date对象定义一个ago属性， 返回以自然语言描述的日期间隔。<br>很多时候， 特别在软件中， 想用自然语言来描述日期距离某个特定时间点的时间间隔。比如： “某事件发生在三秒前”， 这种表达，要远比“某件事情发生在x年x月x日”， 这种表达更容易理解。</p>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//基于John的prettyDate</span></span><br><span class="line"><span class="built_in">Date</span>.prototype.__defineGetter___(<span class="string">'ago'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> diff = (<span class="keyword">new</span> <span class="built_in">Date</span>()).getTime() - <span class="keyword">this</span>.getTime()) / <span class="number">1000</span>)</span><br><span class="line">  <span class="keyword">var</span> day_diff = <span class="built_in">Math</span>.floor(diff / <span class="number">86400</span>);</span><br><span class="line">  <span class="keyword">return</span> day_diff == <span class="number">0</span> &amp;&amp; (diff &lt; <span class="number">60</span> &amp;&amp; <span class="string">"just now"</span> ||</span><br><span class="line">diff &lt; <span class="number">120</span> &amp;&amp; <span class="string">"1 minute ago"</span> ||</span><br><span class="line">diff &lt; <span class="number">3600</span> &amp;&amp; <span class="built_in">Math</span>.floor(diff/<span class="number">60</span>) + <span class="string">"minutes ago"</span> ||</span><br><span class="line">diff&lt;<span class="number">7200</span> &amp;&amp; <span class="string">"1 hour ago"</span>||</span><br><span class="line">diff &lt; <span class="number">86400</span> &amp;&amp; <span class="built_in">Math</span>.floor((diff/<span class="number">3600</span>) + <span class="string">"hours ago"</span>) ||</span><br><span class="line">day_diff == <span class="number">1</span> &amp;&amp; <span class="string">"Yesterday"</span>||</span><br><span class="line">day_diff &lt; <span class="number">7</span> &amp;&amp; <span class="string">"day_diff"</span> + <span class="string">" days ago"</span>||</span><br><span class="line"><span class="built_in">Math</span>.ceil(day_diff/ <span class="number">7</span> + <span class="string">"weeks ago"</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>然后简单的访问ago属性即可</p>
-<p>var a = new Date(‘09/18/1991’);<br>a.ago;</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-算法导论-1" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/09/15/算法导论-1/" class="article-date">
-  	<time datetime="2015-09-15T13:39:36.000Z" itemprop="datePublished">2015-09-15</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/15/算法导论-1/">算法导论-1</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="算法">算法</h1><h2 id="算法设计的若干通用策略">算法设计的若干通用策略</h2><hr>
-<ol>
-<li><p>穷举搜索</p>
-<ul>
-<li><strong>直截了当的试遍所有解</strong></li>
-<li><p>局限： <strong>效率低下</strong></p>
-<blockquote>
-<p>幻方问题<br><img src="./img/幻方.jpg" alt="幻方"></p>
-</blockquote>
-<p>3*3的方格中填9个数，使其横，纵，斜的和均相等。<br>很显然，有9！种组合。让计算机去遍历他们一遍吧。当问题规模变大的时候，算死你。<br>其实，要证明公共的和是15，然后中间放5。</p>
-</li>
-</ul>
-</li>
-</ol>
-<hr>
-<ol>
-<li><p>回溯法</p>
-</li>
-<li><p>减而治之</p>
-</li>
-<li><p>分而治之</p>
-</li>
-<li>变而治之</li>
-<li>贪心法</li>
-<li>迭代改进</li>
-<li>动态规划</li>
-</ol>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/09/15/hello-world/" class="article-date">
-  	<time datetime="2015-09-15T11:48:52.000Z" itemprop="datePublished">2015-09-15</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/15/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 </div>
       <footer id="footer">
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2015 libhaos
+    		&copy; 2016 libhaos
     	</div>
     </div>
   </div>

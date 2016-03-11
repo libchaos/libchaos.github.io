@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>异步与同步 | libchaos Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="异步与同步从调用方式上，可以把他们分为3类： 同步调用，回调和异步调用。同步调用是一种阻塞式的调用，调用要等待对方执行完毕才返回，他是一种单向调用；回调是一种双向调用模式，也就是说，被调用方在接口被调用时也会调用对方的接口；异步调用是一种类似消息或事件机制，不过他的调用方向刚好相反， 接口的服务在收到某种讯息或发生某种事件时，会主动通知客户方（就是调用客户方的接口）。
+
+实例123var fs =">
+<meta property="og:type" content="article">
+<meta property="og:title" content="异步与同步">
+<meta property="og:url" content="http://yoursite.com/2016/03/10/异步与同步/index.html">
+<meta property="og:site_name" content="libchaos Blog">
+<meta property="og:description" content="异步与同步从调用方式上，可以把他们分为3类： 同步调用，回调和异步调用。同步调用是一种阻塞式的调用，调用要等待对方执行完毕才返回，他是一种单向调用；回调是一种双向调用模式，也就是说，被调用方在接口被调用时也会调用对方的接口；异步调用是一种类似消息或事件机制，不过他的调用方向刚好相反， 接口的服务在收到某种讯息或发生某种事件时，会主动通知客户方（就是调用客户方的接口）。
+
+实例123var fs =">
+<meta property="og:updated_time" content="2016-03-10T12:16:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="异步与同步">
+<meta name="twitter:description" content="异步与同步从调用方式上，可以把他们分为3类： 同步调用，回调和异步调用。同步调用是一种阻塞式的调用，调用要等待对方执行完毕才返回，他是一种单向调用；回调是一种双向调用模式，也就是说，被调用方在接口被调用时也会调用对方的接口；异步调用是一种类似消息或事件机制，不过他的调用方向刚好相反， 接口的服务在收到某种讯息或发生某种事件时，会主动通知客户方（就是调用客户方的接口）。
+
+实例123var fs =">
+  
+    <link rel="alternative" href="/atom.xml" title="libchaos Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://7xojpa.com1.z0.glb.clouddn.com/blog.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="http://7xojpa.com1.z0.glb.clouddn.com/portrait.jpg" class="js-avatar" style="width: 100%;height: 100%;opacity: 1;">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">libhaos</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">Fake it</p>
+		
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/libchaos" title="github">github</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<h1 class="header-author js-mobile-header hide">libhaos</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="http://7xojpa.com1.z0.glb.clouddn.com/portrait.jpg" class="js-avatar" style="width: 100%;height: 100%;opacity: 1;">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">libhaos</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">Fake it</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/libchaos" title="github">github</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-异步与同步" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/10/异步与同步/" class="article-date">
+  	<time datetime="2016-03-10T11:51:32.000Z" itemprop="datePublished">2016-03-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      异步与同步
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="异步与同步">异步与同步</h1><p>从调用方式上，可以把他们分为3类： 同步调用，回调和异步调用。同步调用是一种阻塞式的调用，调用要等待对方执行完毕才返回，他是一种单向调用；回调是一种双向调用模式，也就是说，被调用方在接口被调用时也会调用对方的接口；异步调用是一种类似消息或事件机制，不过他的调用方向刚好相反， 接口的服务在收到某种讯息或发生某种事件时，会主动通知客户方（就是调用客户方的接口）。</p>
+<ul>
+<li>实例<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">var</span> data = fs.readFileSync(<span class="string">'new.txt'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(data.toString());</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>readFileSync是同步方法，会阻塞直接得到结果后，才继续执行之后的语句。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line">fs.readFile(<span class="string">'new.txt'</span>, <span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">err, data</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(data.toString());</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'first me run'</span>);</span><br></pre></td></tr></table></figure>
+<p>会发现console.log(‘first me run’)先执行。因为readfile是异步函数，不会阻塞之后的语句。callback是回调函数，等到底层读完数据后， 会调用该函数。<br>node.js中回调的函数的规范是：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">err, args0, args1...</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面模拟一个异步函数，和回调函数，加深理解。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sumAsyn</span>(<span class="params">a, b, callback</span>) </span>&#123;</span><br><span class="line">  setTimeout(</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(<span class="keyword">typeof</span> a === <span class="string">'number'</span> &amp;&amp; <span class="keyword">typeof</span> b === <span class="string">'number'</span>)&#123;</span><br><span class="line">        callback(<span class="literal">null</span>, a + b);</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        callback(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'must be number'</span>));</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  , <span class="number">200</span>)</span><br><span class="line">&#125;</span><br><span class="line">sumAsyn(<span class="number">2</span>, <span class="number">3</span>, <span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">err, rs</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(rs);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'first run!!'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>我们定义一个sumAsyn异步函数，运行后先执行console.log(‘first run!!’)。</p>
+<p>在node开始所有i/o应该用异步。</p>
+<h2 id="异步">异步</h2><p>所谓”异步”，简单说就是一个任务分成两段，先执行第一段，然后转而执行其他任务，等做好了准备，再回过头执行第二段。</p>
+<h2 id="回调函数">回调函数</h2><p>JavaScript语言对异步编程的实现，就是回调函数。所谓回调函数，就是把任务的第二段单独写在一个函数里面，等到重新执行这个任务的时候，就直接调用这个函数。它的英语名字callback，直译过来就是”重新调用”。<br>一个有趣的问题是，为什么Node.js约定，回调函数的第一个参数，必须是错误对象err（如果没有错误，该参数就是null）？原因是执行分成两段，在这两段之间抛出的错误，程序无法捕捉，只能当作参数，传入第二段。</p>
+<h2 id="Promise">Promise</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// function asyncFun(a, b, cb) &#123;</span></span><br><span class="line"><span class="comment">//   setTimeout(function () &#123;</span></span><br><span class="line"><span class="comment">//     cb(a + b);</span></span><br><span class="line"><span class="comment">//   &#125;, 200);</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// //异步的</span></span><br><span class="line"><span class="comment">// asyncFun(1, 2, function (result) &#123;</span></span><br><span class="line"><span class="comment">//   if(result &gt; 2)&#123;</span></span><br><span class="line"><span class="comment">//     asyncFun(result, 2, function (result) &#123;</span></span><br><span class="line"><span class="comment">//       if(result &gt; 4)&#123;</span></span><br><span class="line"><span class="comment">//         asyncFun(result, 2, function (result) &#123;</span></span><br><span class="line"><span class="comment">//           console.log('ok');</span></span><br><span class="line"><span class="comment">//         &#125;);</span></span><br><span class="line"><span class="comment">//       &#125;</span></span><br><span class="line"><span class="comment">//     &#125;);</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">// &#125;);</span></span><br><span class="line"><span class="comment">// console.log(2);</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">asyncFun</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      resolve(a + b);</span><br><span class="line">    &#125;, <span class="number">200</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line">asyncFun(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(result &gt; <span class="number">2</span>)&#123;</span><br><span class="line">      <span class="keyword">return</span> asyncFun(result, <span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(result &gt; <span class="number">4</span>)&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'ok'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>可以看到，Promise 的写法只是回调函数的改进，使用then方法以后，异步任务的两段执行看得更清楚了，除此以外，并无新意。</p>
+<p>Promise 的最大问题是代码冗余，原来的任务被Promise 包装了一下，不管什么操作，一眼看去都是一堆 then，原来的语义变得很不清楚。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/03/11/js-原型/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          js_原型
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/03/10/javascript异步/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">javascript异步</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="异步与同步" data-title="异步与同步" data-url="http://yoursite.com/2016/03/10/异步与同步/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 libhaos
+    	</div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    
+  </div>
+</body>
+</html>

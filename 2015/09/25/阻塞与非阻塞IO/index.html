@@ -27,7 +27,7 @@ Node中，你需要对回调函数如何修改当前内存中的变量(状态)�
   
     <link rel="icon" href="http://7xojpa.com1.z0.glb.clouddn.com/blog.ico">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <div id="container">
@@ -159,7 +159,7 @@ Node中，你需要对回调函数如何修改当前内存中的变量(状态)�
 <p>Node中，你需要对回调函数如何修改当前内存中的变量(状态)特别小心。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> books = [<span class="string">"红楼梦"</span>, <span class="string">"三国演义"</span>];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">serveBooks</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//给客户端返回的HTML代码</span></span><br><span class="line">  <span class="keyword">var</span> html = <span class="string">'&lt;b&gt;'</span> + books.join(<span class="string">'&lt;/b&gt;&lt;br&gt;&lt;b&gt;'</span>)+<span class="string">'&lt;/b&gt;'</span>;</span><br><span class="line">  books = [];</span><br><span class="line">  <span class="keyword">return</span> html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>等价的PHP代码</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$books</span> = <span class="keyword">array</span>(<span class="string">'harry'</span>, <span class="string">'dollars'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">serveBooks</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="variable">$html</span> = <span class="string">'&lt;b&gt;'</span>.join(<span class="variable">$books</span>, <span class="string">'&lt;/b&gt;&lt;br&gt;&lt;b&gt;'</span>).<span class="string">'&lt;/b&gt;'</span>;</span><br><span class="line">  <span class="variable">$books</span> = <span class="keyword">array</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="variable">$html</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$books = <span class="keyword">array</span>(<span class="string">'harry'</span>, <span class="string">'dollars'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">serveBooks</span><span class="params">()</span></span>&#123;</span><br><span class="line">  $html = <span class="string">'&lt;b&gt;'</span>.join($books, <span class="string">'&lt;/b&gt;&lt;br&gt;&lt;b&gt;'</span>).<span class="string">'&lt;/b&gt;'</span>;</span><br><span class="line">  $books = <span class="keyword">array</span>();</span><br><span class="line">  <span class="keyword">return</span> $html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <pre><code>APACHE
 </code></pre><p>PHP         PHP<br>THREAD      THREAD</p>
 <p>REQUEST     REQUEST</p>
@@ -241,7 +241,7 @@ Node中，你需要对回调函数如何修改当前内存中的变量(状态)�
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2015 libhaos
+    		&copy; 2016 libhaos
     	</div>
     </div>
   </div>
