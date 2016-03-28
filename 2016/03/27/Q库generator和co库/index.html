@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Q库generator和co库 | libchaos Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Promise模式的q库promise 是一种让异步代码写起来更舒服的模式。q库可运行node下，它是一种promise的实现npm i q 来安装它
+下面采用回调方式编写123456789101112var fs = require(&apos;fs&apos;);fs.readdir(&apos;.&apos;, function(err, rs)&amp;#123;  fs.readFile(rs[0], function(err, f1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Q库generator和co库">
+<meta property="og:url" content="http://yoursite.com/2016/03/27/Q库generator和co库/index.html">
+<meta property="og:site_name" content="libchaos Blog">
+<meta property="og:description" content="Promise模式的q库promise 是一种让异步代码写起来更舒服的模式。q库可运行node下，它是一种promise的实现npm i q 来安装它
+下面采用回调方式编写123456789101112var fs = require(&apos;fs&apos;);fs.readdir(&apos;.&apos;, function(err, rs)&amp;#123;  fs.readFile(rs[0], function(err, f1">
+<meta property="og:updated_time" content="2016-03-28T01:15:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Q库generator和co库">
+<meta name="twitter:description" content="Promise模式的q库promise 是一种让异步代码写起来更舒服的模式。q库可运行node下，它是一种promise的实现npm i q 来安装它
+下面采用回调方式编写123456789101112var fs = require(&apos;fs&apos;);fs.readdir(&apos;.&apos;, function(err, rs)&amp;#123;  fs.readFile(rs[0], function(err, f1">
+  
+    <link rel="alternative" href="/atom.xml" title="libchaos Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://7xojpa.com1.z0.glb.clouddn.com/blog.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="http://7xojpa.com1.z0.glb.clouddn.com/portrait.jpg" class="js-avatar" style="width: 100%;height: 100%;opacity: 1;">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">libhaos</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">Fake it</p>
+		
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/libchaos" title="github">github</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<h1 class="header-author js-mobile-header hide">libhaos</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="http://7xojpa.com1.z0.glb.clouddn.com/portrait.jpg" class="js-avatar" style="width: 100%;height: 100%;opacity: 1;">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">libhaos</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">Fake it</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/libchaos" title="github">github</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Q库generator和co库" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/27/Q库generator和co库/" class="article-date">
+  	<time datetime="2016-03-27T13:19:45.000Z" itemprop="datePublished">2016-03-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Q库generator和co库
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Promise模式的q库">Promise模式的q库</h1><p>promise 是一种让异步代码写起来更舒服的模式。<br>q库可运行node下，它是一种promise的实现<br><strong><em>npm i q</em></strong> 来安装它</p>
+<p>下面采用回调方式编写<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line">fs.readdir(<span class="string">'.'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, rs</span>)</span>&#123;</span><br><span class="line">  fs.readFile(rs[<span class="number">0</span>], <span class="function"><span class="keyword">function</span>(<span class="params">err, f1</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(f1);</span><br><span class="line">    fs.readFile(rs[<span class="number">1</span>], <span class="function"><span class="keyword">function</span> (<span class="params">err, f2</span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(f2);</span><br><span class="line">      fs.readFile(rs[<span class="number">2</span>], <span class="function"><span class="keyword">function</span> (<span class="params">err, f3</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(f3);</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>采用q库的解决方案</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Q = <span class="built_in">require</span>(<span class="string">'q'</span>),</span><br><span class="line">  fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line">Q.nfcall(fs.readdri, <span class="string">'.'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">ns</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> promises = [];</span><br><span class="line">  ns.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">filename</span>) </span>&#123;</span><br><span class="line">    promises.push(Q.ncall(fs.readFile, filename, <span class="string">'utf-8'</span>));</span><br><span class="line">  &#125;);</span><br><span class="line">  Q.all(promises).then(<span class="function"><span class="keyword">function</span>(<span class="params">results</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(results);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">.fail(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(err);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>通过<strong><em>Q.ncall</em></strong>方法调用异步方法，返回一个<strong><em>promise</em></strong>对象，<strong><em>promise</em></strong>对象具有一个then方法，<br>可以运行得到结果。<br>这里<strong><em>var promises = [];</em></strong> 变量用于存储promise数组，把这个参数加入<strong><em>Q.all</em></strong>中，会得到一个promise对象，调用then方法会得到一个数组，这个数组就是所有promise运行的结果。<br>一切都围绕promise对象，它有一个then方法用于返回回调函数的结果，还有一个fail函数，用于返回异常对象，then 和fail不会被同时调用，就好比一个普通函数，如果抛出异常就不会有返回值一样。</p>
+<p><strong><em>then</em></strong>代表无异常情况下的返回值，<strong><em>fail</em></strong>表示抛出异常，如果过程中有任何异常，<strong><em>promise.then</em></strong>的函数就不会被调用，而是会调用<strong><em>fail</em></strong>，表示抛出异常。</p>
+<hr>
+<h1 id="generator">generator</h1><ul>
+<li>运行generator代码需要node version&gt;4<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> * <span class="title">f</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> *<span class="title">f</span>(<span class="params"></span>) </span>&#123;&#125;  </span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">f</span>(<span class="params"></span>) </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>以上三种方式都对<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f.constructor; <span class="comment">//function GeneratorFunction()&#123;native code&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>调用生成器函数就会产生一个生成器对象，生成器对象拥有next()方法，用来迭代<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> * <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hello'</span>);</span><br><span class="line">&#125;</span><br><span class="line">f();</span><br></pre></td></tr></table></figure></p>
+<p>运行代码后，终端没有打印出“hello”， 这是因为调用生成器函数产生一个生成器对象，但是不会执行里面的代码，需要调用next()函数.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> * <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hello'</span>);</span><br><span class="line">&#125;</span><br><span class="line">f();</span><br><span class="line"><span class="keyword">var</span> g = f();</span><br><span class="line">g.next();</span><br></pre></td></tr></table></figure></p>
+<p>g是一个gnerator对象，调用next方法后，将真正进入f的函数体。<br>根据上面的例子，会发现generator有个断点效果，就是在执行方法体之前， 等待next方法。<br>通常generator函数和yeild关键词一起使用。yeild可以理解为一个断点<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> * <span class="title">gf</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"start"</span>);</span><br><span class="line">  <span class="keyword">var</span> str = <span class="keyword">yield</span> <span class="string">"hello"</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"result: "</span>, str);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> g = gf();</span><br><span class="line">g.next();</span><br></pre></td></tr></table></figure></p>
+<p>调用一次next，进入函数，打印出start,这时遇到yied所以中断了，我们后面继续一个next方法<br>打印出<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">g.next()</span><br><span class="line">==&gt; start</span><br><span class="line">==&gt; result: <span class="literal">undefined</span></span><br></pre></td></tr></table></figure></p>
+<p>这好像和我想的不一样，第一感觉应该 result: hello 而不是result: undefined, 这是因为yield后面跟着的语句确实返回了， 只不过返回的hello值不是给了str变量，而是在第一次调用g.next(),它会返回一个对象（{ value: ‘hello’, done: false }）， 这个对象里有个value属性， 这个属性的值就是hello</p>
+<p>so change the code</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> * <span class="title">gf</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"start"</span>);</span><br><span class="line">  <span class="keyword">var</span> str = <span class="keyword">yield</span> <span class="string">"hello"</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"result: "</span>, str);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> g = gf();</span><br><span class="line"><span class="keyword">var</span> value = g.next().value;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"yield value-&gt; "</span>, value);</span><br></pre></td></tr></table></figure>
+<p>第一次调用next后，进入函数体， 遇到yield对象，中断了，就是： 中断并把yield的右侧的值， 写入本次调用next生成的对象中， 这个对象的value值就是右侧的值。<br>第二次调用next方法后，yield会把next(args)方法的args值赋予左侧变量， 并继续执行语句，下面的代码是我们想要的结果<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> * <span class="title">gf</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"start"</span>);</span><br><span class="line">  <span class="keyword">var</span> str = <span class="keyword">yield</span> <span class="string">"hello"</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"result: "</span>, str);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> g = gf();</span><br><span class="line"><span class="keyword">var</span> value = g.next().value;</span><br><span class="line">g.next(value);</span><br></pre></td></tr></table></figure></p>
+<p>Then we get the result what we want…<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">start</span><br><span class="line"><span class="literal">result</span>: hello</span><br></pre></td></tr></table></figure></p>
+<p>next 方法返回的对象有两个值{value, done}, value 表示yeild右侧的值也可能是generator的返回值； done如果为false，表示后面还有未执行的yeild语句。</p>
+<hr>
+<h1 id="CO库的介绍">CO库的介绍</h1><p>co 用于优化异步函数调用方式， 支持promise和thunkify</p>
+<p>npm i co thunkify</p>
+<p>不采用co的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line">fs.readdir(<span class="string">'.'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, rs</span>)</span>&#123;</span><br><span class="line">  fs.readFile(rs[<span class="number">0</span>], <span class="function"><span class="keyword">function</span>(<span class="params">err, f1</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(f1);</span><br><span class="line">    fs.readFile(rs[<span class="number">1</span>], <span class="function"><span class="keyword">function</span> (<span class="params">err, f2</span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(f2);</span><br><span class="line">      fs.readFile(rs[<span class="number">2</span>], <span class="function"><span class="keyword">function</span> (<span class="params">err, f3</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(f3);</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>查看当前目录下有多少文件， 然后逐个读取， 把读取的数据打印到终端， 可笑的是我必须知道，这个目录下有多少文件。。。。</p>
+<h2 id="-_留有问题。。。">- 留有问题。。。</h2><h2 id="co_顺序执行下列代码">co 顺序执行下列代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> co = <span class="built_in">require</span>(<span class="string">'co'</span>),</span><br><span class="line">thunkify = <span class="built_in">require</span>(<span class="string">'thunkify'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params">time, callback</span>)</span>&#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    callback(<span class="literal">null</span>, <span class="string">"setTimeout time is - "</span> + time);</span><br><span class="line">  &#125;, time);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> func = thunkify(fun);</span><br><span class="line"></span><br><span class="line">co(<span class="function"><span class="keyword">function</span> * (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">yield</span> func(<span class="number">2000</span>));</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">yield</span> func(<span class="number">1000</span>));</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">yield</span> func(<span class="number">5000</span>));</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'ok'</span>);</span><br><span class="line">&#125;).catch((err) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(err);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/03/11/js-原型/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">js_原型</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Q库generator和co库" data-title="Q库generator和co库" data-url="http://yoursite.com/2016/03/27/Q库generator和co库/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 libhaos
+    	</div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    
+  </div>
+</body>
+</html>

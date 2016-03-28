@@ -113,6 +113,72 @@
 
       <div class="body-wrap">
   
+    <article id="post-阻塞与非阻塞IO" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/09/25/阻塞与非阻塞IO/" class="article-date">
+  	<time datetime="2015-09-25T10:38:43.000Z" itemprop="datePublished">2015-09-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/25/阻塞与非阻塞IO/">阻塞与非阻塞IO</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="阻塞与非阻塞IO">阻塞与非阻塞IO</h1><hr>
+<p>Node中，你需要对回调函数如何修改当前内存中的变量(状态)特别小心。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> books = [<span class="string">"红楼梦"</span>, <span class="string">"三国演义"</span>];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">serveBooks</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//给客户端返回的HTML代码</span></span><br><span class="line">  <span class="keyword">var</span> html = <span class="string">'&lt;b&gt;'</span> + books.join(<span class="string">'&lt;/b&gt;&lt;br&gt;&lt;b&gt;'</span>)+<span class="string">'&lt;/b&gt;'</span>;</span><br><span class="line">  books = [];</span><br><span class="line">  <span class="keyword">return</span> html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>等价的PHP代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$books = <span class="keyword">array</span>(<span class="string">'harry'</span>, <span class="string">'dollars'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">serveBooks</span><span class="params">()</span></span>&#123;</span><br><span class="line">  $html = <span class="string">'&lt;b&gt;'</span>.join($books, <span class="string">'&lt;/b&gt;&lt;br&gt;&lt;b&gt;'</span>).<span class="string">'&lt;/b&gt;'</span>;</span><br><span class="line">  $books = <span class="keyword">array</span>();</span><br><span class="line">  <span class="keyword">return</span> $html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>APACHE
+</code></pre><p>PHP         PHP<br>THREAD      THREAD</p>
+<p>REQUEST     REQUEST</p>
+<p>NODE.JS<br>THREAD</p>
+<p>REQUEST REQUEST REQUEST</p>
+<p>node.js只有借助child_process 才能生成新的process</p>
+<p>采用事件轮询意味 甚么 呢？<br>  Node会先注册事件， 随后，不停的询问内核，这些事情是否已经分发</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/阻塞-非阻塞-IO/">阻塞 非阻塞 IO</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="post-了不起的node.js学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
